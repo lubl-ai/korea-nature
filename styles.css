@@ -1,0 +1,377 @@
+/* 한국의 결 — styles.css */
+
+@font-face {
+  font-family: "Inter Variable";
+  src: url("./assets/fonts/inter/InterVariable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Colors — from DESIGN.md */
+  --color-primary: #ffffff;
+  --color-on-primary: #000000;
+  --color-accent-blue: #0099ff;
+  --color-ink: #ffffff;
+  --color-ink-muted: #999999;
+  --color-canvas: #090909;
+  --color-surface-1: #141414;
+  --color-surface-2: #1c1c1c;
+  --color-hairline: #262626;
+  --color-hairline-soft: #1a1a1a;
+
+  /* Spacing scale — from DESIGN.md */
+  --space-hair: 1px;
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 15px;
+  --space-lg: 20px;
+  --space-xl: 30px;
+  --space-xxl: 40px;
+  --space-section: 96px;
+
+  /* Border radius scale — from DESIGN.md */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 15px;
+  --radius-xl: 20px;
+  --radius-xxl: 30px;
+  --radius-pill: 100px;
+  --radius-full: 9999px;
+
+  /* Display typeface: DESIGN.md specifies the proprietary "GT Walsheim Medium".
+     That font cannot be legally copied into this project (research.md §6), so display
+     headings use DESIGN.md's own documented fallback — a system sans-serif stack —
+     styled with the same size/weight/line-height/letter-spacing tokens. */
+  --font-display: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter Variable", -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  /* Reading-column body type — per spec.md FR-006 (17-20px, line-height 1.65-1.85),
+     which takes precedence over DESIGN.md's general 15px/1.30 body token for this
+     editorial reading-panel content. */
+  --reading-column-min: 36rem;
+  --reading-column-max: 48rem;
+  --reading-font-size: 18px;
+  --reading-line-height: 1.75;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+a {
+  color: var(--color-accent-blue);
+}
+
+/* ---------------------------------------------------------------------
+   Scene base — shared by Hero, the 4 place sections, and the Outro/CTA.
+   Mobile-first: a normal stacked block (image, then reading panel below
+   it) satisfies FR-011's mobile content-parity requirement by default.
+   The desktop journey rhythm is layered on top at the 900px breakpoint.
+   --------------------------------------------------------------------- */
+
+.scene {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.scene__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.scene__panel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--reading-column-max);
+  min-width: min(100%, var(--reading-column-min));
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg);
+  font-size: var(--reading-font-size);
+  line-height: var(--reading-line-height);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-muted);
+  margin: 0 0 var(--space-sm);
+}
+
+.display-title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(48px, 9vw, 110px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin: 0 0 var(--space-lg);
+}
+
+.lead {
+  font-size: var(--reading-font-size);
+  line-height: var(--reading-line-height);
+  color: var(--color-ink);
+  max-width: 40ch;
+}
+
+.place-name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-sm);
+  margin: 0 0 var(--space-sm);
+}
+
+.place-name__ko {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 48px);
+  letter-spacing: -0.02em;
+}
+
+.place-name__en {
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-muted);
+}
+
+.place-tagline {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(20px, 2.4vw, 28px);
+  line-height: 1.3;
+  margin: 0 0 var(--space-lg);
+}
+
+.place-body {
+  margin: 0 0 var(--space-lg);
+}
+
+.place-keywords {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  padding: 0;
+  margin: var(--space-lg) 0 0;
+}
+
+.place-keywords li {
+  font-size: 14px;
+  color: var(--color-ink-muted);
+  padding: var(--space-xs) var(--space-md);
+  border: var(--space-hair) solid var(--color-hairline);
+  border-radius: var(--radius-pill);
+}
+
+/* ---------------------------------------------------------------------
+   Text legibility over photography: a local gradient panel behind the
+   reading column, not a full-image darken (FR-005).
+   --------------------------------------------------------------------- */
+
+.scene__panel {
+  background: linear-gradient(
+    180deg,
+    rgba(9, 9, 9, 0.82) 0%,
+    rgba(9, 9, 9, 0.82) 100%
+  );
+}
+
+.scene--hero .scene__panel,
+.scene--outro .scene__panel {
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------------
+   Desktop rhythm — three distinct layout variants so the four place
+   sections don't repeat the same image/text arrangement (FR-007).
+   --------------------------------------------------------------------- */
+
+@media (min-width: 900px) {
+  .scene {
+    min-height: 100vh;
+  }
+
+  .scene__image {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+
+  .scene__panel {
+    background: linear-gradient(
+      100deg,
+      rgba(9, 9, 9, 0.88) 0%,
+      rgba(9, 9, 9, 0.88) 62%,
+      rgba(9, 9, 9, 0) 100%
+    );
+    padding: var(--space-xxl) var(--space-xl);
+  }
+
+  /* image-right: photo weighted right, reading panel on the left third */
+  .scene--place[data-layout="image-right"] {
+    justify-content: flex-start;
+  }
+  .scene--place[data-layout="image-right"] .scene__panel {
+    margin: 0;
+    margin-left: var(--space-xxl);
+  }
+
+  /* image-left: photo weighted left, reading panel on the right third */
+  .scene--place[data-layout="image-left"] {
+    justify-content: flex-end;
+  }
+  .scene--place[data-layout="image-left"] .scene__panel {
+    margin: 0;
+    margin-right: var(--space-xxl);
+    background: linear-gradient(
+      260deg,
+      rgba(9, 9, 9, 0.88) 0%,
+      rgba(9, 9, 9, 0.88) 62%,
+      rgba(9, 9, 9, 0) 100%
+    );
+  }
+
+  /* panel-overlay: reading panel centered low, over a translucent full-width strip */
+  .scene--place[data-layout="panel-overlay"] {
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .scene--place[data-layout="panel-overlay"] .scene__panel {
+    margin: 0 auto var(--space-xxl);
+    background: rgba(9, 9, 9, 0.72);
+    border-radius: var(--radius-xl);
+    text-align: center;
+  }
+
+  .scene--hero .scene__panel {
+    margin: 0 auto;
+    background: linear-gradient(
+      180deg,
+      rgba(9, 9, 9, 0.55) 0%,
+      rgba(9, 9, 9, 0.82) 100%
+    );
+    border-radius: var(--radius-xl);
+  }
+
+  .scene--outro .scene__panel {
+    margin: 0 auto;
+    background: rgba(9, 9, 9, 0.6);
+    border-radius: var(--radius-xl);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   CTA button — DESIGN.md button-primary: white pill on dark canvas.
+   --------------------------------------------------------------------- */
+
+.cta-button {
+  display: inline-block;
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: var(--space-sm) var(--space-lg);
+  cursor: pointer;
+  margin-top: var(--space-lg);
+}
+
+.cta-button:focus-visible {
+  outline: 3px solid var(--color-accent-blue);
+  outline-offset: 3px;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--color-accent-blue);
+  outline-offset: 2px;
+}
+
+.footer-credit {
+  font-size: 13px;
+  color: var(--color-ink-muted);
+  margin-top: var(--space-lg);
+}
+
+/* ---------------------------------------------------------------------
+   Single-pin desktop journey (research.md §2): script.js adds
+   `is-pinned-journey` to <body> only inside the
+   "(prefers-reduced-motion: no-preference) and (min-width: 900px)"
+   matchMedia bucket, and removes it in that bucket's cleanup — so this
+   never applies under reduced motion or on narrow viewports (FR-010,
+   FR-012). GSAP's ScrollTrigger pin sets .journey to `position: fixed`
+   itself; this block only needs to stack the six scenes on top of each
+   other inside it.
+   --------------------------------------------------------------------- */
+
+body.is-pinned-journey .journey {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body.is-pinned-journey .journey main {
+  position: static;
+  height: 0;
+  overflow: visible;
+}
+
+body.is-pinned-journey .scene {
+  position: absolute;
+  inset: 0;
+  min-height: 0;
+  opacity: 0;
+  will-change: opacity;
+}
+
+body.is-pinned-journey .scene__image {
+  will-change: transform, opacity;
+}
+
+body.is-pinned-journey .scene__panel > * {
+  will-change: transform, opacity;
+}
+
+/* ---------------------------------------------------------------------
+   Mobile fade-in fallback (T027): `.will-fade` is only ever added by
+   script.js right before it starts observing a scene, so a scene stays
+   fully visible by default if JavaScript never runs (progressive
+   enhancement) — it only dips to 0 opacity once JS itself is about to
+   animate it back in on scroll.
+   --------------------------------------------------------------------- */
+
+.will-fade {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.will-fade.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
